@@ -17,10 +17,17 @@ export const metadata: Metadata = {
     title: 'Se connecter',
   };
 
-  const SignIn = async () => {
+  const SignIn = async (
+    props: {
+      searchParams: Promise<{
+        callbackUrl: string;
+      }>;
+    }
+  ) => {
+    const { callbackUrl } = await props.searchParams;
     const session = await auth();
     if (session) {
-      return redirect('/');
+      return redirect(callbackUrl || '/');
     }
     return (
       <div className='w-full max-w-md mx-auto'>
@@ -35,7 +42,7 @@ export const metadata: Metadata = {
                 alt={`${APP_NAME} logo`}
               />
             </Link>
-            <CardTitle className='text-center'>Sign In</CardTitle>
+            <CardTitle className='text-center'>Se connecter</CardTitle>
             <CardDescription className='text-center'>
               Choississez une manière de vous connecter
             </CardDescription>
