@@ -7,7 +7,6 @@ const HomePage = async () => {
 
   return (
     <div className='space-y-8'>
-      <h2 className='h2-bold'>Produits Récents</h2>
       <ProductList title='Nouveautés' data={latestProducts} />
     </div>
   );
