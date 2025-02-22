@@ -5,7 +5,7 @@ const HomePage = () => {
   return (
     <div className='space-y-8'>
       <h2 className='h2-bold'>Produits Récents</h2>
-      <ProductList title='Nouveautés' data={sampleData.products} />
+      <ProductList title='Nouveautés' data={sampleData.products} limit={4}/>
     </div>
   );
 };
