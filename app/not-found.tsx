@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 import { APP_NAME } from '@/lib/constants';
 import Image from 'next/image';
