@@ -16,13 +16,13 @@ export async function signInWithCredentials(
   
       await signIn('credentials', user);
   
-      return { success: true, message: 'Signed in successfully' };
+      return { success: true, message: 'Connexion réussie' };
     } catch (error) {
       if (isRedirectError(error)) {
         throw error;
       }
   
-      return { success: false, message: 'Invalid email or password' };
+      return { success: false, message: 'Email ou mot de passe invalide' };
     }
   }
 
