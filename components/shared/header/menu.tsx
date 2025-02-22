@@ -19,13 +19,13 @@ const Menu = () => {
             <Button asChild variant='ghost'>
               <Link href='/cart'>
                 <ShoppingCart />
-                Cart
+                Panier
               </Link>
             </Button>
             <Button asChild>
               <Link href='/sign-in'>
                 <UserIcon />
-                Sign In
+                Se connecter
               </Link>
             </Button>
           </nav>
@@ -40,13 +40,13 @@ const Menu = () => {
                 <Button asChild variant='ghost'>
                   <Link href='/cart'>
                     <ShoppingCart />
-                    Cart
+                    Panier
                   </Link>
                 </Button>
                 <Button asChild>
                   <Link href='/sign-in'>
                     <UserIcon />
-                    Sign In
+                    Se connecter
                   </Link>
                 </Button>
                 <SheetDescription></SheetDescription>
