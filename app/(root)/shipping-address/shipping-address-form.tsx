@@ -10,6 +10,8 @@ import { shippingAddressDefaultValues } from '@/lib/constants';
 import { toast } from 'sonner';
 import { useTransition } from 'react';
 import { updateUserAddress } from '@/lib/actions/user.actions';
+import CheckoutSteps from '@/components/shared/checkout-steps';
+
 
 import {
   Form,
@@ -52,7 +54,8 @@ const onSubmit: SubmitHandler<z.infer<typeof shippingAddressSchema>> = async (va
 
   return (
     <>
-      <div className='max-w-md mx-auto space-y-4'>
+    <CheckoutSteps current={1} />
+    <div className='max-w-md mx-auto space-y-4'>
         <h1 className='h2-bold mt-4'>Shipping Address</h1>
         <p className='text-sm text-muted-foreground'>
           Please enter the address that you want to ship to
