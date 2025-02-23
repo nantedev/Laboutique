@@ -17,6 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { formatCurrency } from '@/lib/utils';
 
 const CartTable = ({ cart }: { cart?: Cart }) => {
     const router = useRouter();
@@ -111,6 +112,26 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
         </TableBody>
         </Table>
         </div>
+            <Card>
+                <CardContent className='p-4   gap-4'>
+                    <div className='pb-3 text-xl'>
+                    Subtotal ({cart?.items.reduce((a, c) => a + c.qty, 0) ?? 0}):
+                    {cart ? formatCurrency(cart.itemsPrice) : '0€'}
+                    </div>
+                    <Button
+                    onClick={() => startTransition(() => router.push('/shipping-address'))}
+                    className='w-full'
+                    disabled={isPending}
+                    >
+                    {isPending ? (
+                        <Loader className='animate-spin w-4 h-4' />
+                    ) : (
+                        <ArrowRight className='w-4 h-4' />
+                    )}
+                    Procéder au paiement
+                    </Button>
+                </CardContent>
+            </Card>
         </div>
         </>
     )  
