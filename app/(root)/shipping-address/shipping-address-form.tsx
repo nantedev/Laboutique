@@ -9,6 +9,7 @@ import { ControllerRenderProps } from 'react-hook-form';
 import { shippingAddressDefaultValues } from '@/lib/constants';
 import { toast } from 'sonner';
 import { useTransition } from 'react';
+import { updateUserAddress } from '@/lib/actions/user.actions';
 
 import {
   Form,
@@ -29,10 +30,26 @@ const ShippingAddressForm = ({
 }) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  
   const form = useForm<z.infer<typeof shippingAddressSchema>>({
     resolver: zodResolver(shippingAddressSchema),
     defaultValues: address || shippingAddressDefaultValues,
   });
+
+const onSubmit: SubmitHandler<z.infer<typeof shippingAddressSchema>> = async (values) => {
+  startTransition(async () => {
+    const res = await updateUserAddress(values);
+
+    if (!res.success) {
+      toast.error(res.message);
+      return;
+    }
+
+    toast.success('Address updated successfully');
+    router.push('/payment-method');
+  });
+};
+
   return (
     <>
       <div className='max-w-md mx-auto space-y-4'>
@@ -41,10 +58,10 @@ const ShippingAddressForm = ({
           Please enter the address that you want to ship to
         </p>
         <Form {...form}>
-          <form
-            method='post'
+        <form
+            method="post"
             onSubmit={form.handleSubmit(onSubmit)}
-            className='space-y-4'
+            className="space-y-4"
           >
             <div className='flex flex-col gap-5 md:flex-row'>
               <FormField
