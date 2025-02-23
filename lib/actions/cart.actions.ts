@@ -4,12 +4,30 @@ import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { z } from 'zod';
 import { auth } from '@/auth';
-import { formatError } from '../utils';
+import { formatError, round2 } from '../utils';
 import { cartItemSchema, insertCartSchema } from '../validator';
 import { prisma } from '@/db/prisma';
 import { CartItem } from '@/types';
 import { Prisma } from '@prisma/client';
 import { convertToPlainObject } from '../utils';
+
+
+// Calculate cart price based on items
+const calcPrice = (items: z.infer<typeof cartItemSchema>[]) => {
+  const itemsPrice = round2(
+      items.reduce((acc, item) => acc + Number(item.price) * item.qty, 0)
+    ),
+    shippingPrice = round2(itemsPrice > 100 ? 0 : 10),
+    taxPrice = round2(0.15 * itemsPrice),
+    totalPrice = round2(itemsPrice + shippingPrice + taxPrice);
+  return {
+    itemsPrice: itemsPrice.toFixed(2),
+    shippingPrice: shippingPrice.toFixed(2),
+    taxPrice: taxPrice.toFixed(2),
+    totalPrice: totalPrice.toFixed(2),
+  };
+};
+
 
 // Add item to cart in database
 export const addItemToCart = async (data: z.infer<typeof cartItemSchema>) => {
@@ -28,25 +46,36 @@ export const addItemToCart = async (data: z.infer<typeof cartItemSchema>) => {
     const product = await prisma.product.findFirst({
       where: { id: item.productId },
     });
+
     if (!product) throw new Error('Product not found');
-
-    // Testing
-    console.log({
-      'Session Cart ID': sessionCartId,
-      'User ID': userId,
-      'Item Requested': item,
-      'Product Found': product,
-      cart: cart,
-    });
-
-    return {
-      success: true,
-      message: 'Testing Cart',
-    };
+    if (!cart) {
+      // Create new cart object
+      const newCart = insertCartSchema.parse({
+        userId: userId,
+        items: [item],
+        sessionCartId: sessionCartId,
+        ...calcPrice([item]),
+      });
+      // Add to database
+      await prisma.cart.create({
+        data: newCart,
+      });
+    
+      // Revalidate product page
+      revalidatePath(`/product/${product.slug}`);
+    
+      return {
+        success: true,
+        message: 'Item added to cart successfully',
+      };
+    }
+   
   } catch (error) {
     return { success: false, message: formatError(error) };
   }
 };
+
+
 
 //  Get user cart from database
 export async function getMyCart() {
@@ -63,8 +92,10 @@ export async function getMyCart() {
     where: userId ? { userId: userId } : { sessionCartId: sessionCartId },
   });
 
-  if (!cart) return undefined;
-
+  if (!cart) {
+    return undefined   
+  }
+ 
   // Convert Decimal values to strings for compatibility with AddToCart component
   return convertToPlainObject({
     ...cart,
