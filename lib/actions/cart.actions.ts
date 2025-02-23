@@ -68,6 +68,44 @@ export const addItemToCart = async (data: z.infer<typeof cartItemSchema>) => {
         success: true,
         message: 'Item added to cart successfully',
       };
+    } else {
+      // Check for existing item in cart
+      const existItem = (cart.items as CartItem[]).find(
+        (x) => x.productId === item.productId
+      );
+      // If not enough stock, throw error
+      if (existItem) {
+        if (product.stock < existItem.qty + 1) {
+          throw new Error('Not enough stock');
+        }
+    
+        // Increase quantity of existing item
+        (cart.items as CartItem[]).find(
+          (x) => x.productId === item.productId
+        )!.qty = existItem.qty + 1;
+      } else {
+        // If stock, add item to cart
+        if (product.stock < 1) throw new Error('Not enough stock');
+        cart.items.push(item);
+      }
+    
+      // Save to database
+      await prisma.cart.update({
+        where: { id: cart.id },
+        data: {
+          items: cart.items as Prisma.CartUpdateitemsInput[],
+          ...calcPrice(cart.items as CartItem[]),
+        },
+      });
+    
+      revalidatePath(`/product/${product.slug}`);
+    
+      return {
+        success: true,
+        message: `${product.name} ${
+          existItem ? 'updated in' : 'added to'
+        } cart successfully`,
+      };
     }
    
   } catch (error) {
