@@ -5,6 +5,7 @@ import { getProductBySlug } from '@/lib/actions/product.actions';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import ProductImages  from '@/components/shared/product/product-images';
+import AddToCart from '@/components/shared/product/add-to-cart';
 
 const ProductDetailsPage = async (props: {
   params: Promise<{ slug: string }>;
@@ -66,11 +67,22 @@ const ProductDetailsPage = async (props: {
                     <Badge variant='destructive'>Rupture</Badge>
                   )}
                 </div>
-                {product.stock > 0 && (
-                  <div className=' flex-center'>
-                    <Button className='w-full'>Ajouter au panier</Button>
-                  </div>
-                )}
+                {
+                  product.stock > 0 && (
+                    <div className='flex-center'>
+                      <AddToCart
+                        item={{
+                          productId: product.id,
+                          name: product.name,
+                          slug: product.slug,
+                          price: Number(product.price), //@ToDo 
+                          qty: 1,
+                          image: product.images![0],
+                        }}
+                      />
+                    </div>
+                  )
+                }
               </CardContent>
             </Card>
           </div>
