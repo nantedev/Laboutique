@@ -6,23 +6,31 @@ export const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhos
 
 export const LATEST_PRODUCTS_LIMIT = Number(process.env.LATEST_PRODUCTS_LIMIT) || 4;
 
+export const PAYMENT_METHODS = process.env.PAYMENT_METHODS
+  ? process.env.PAYMENT_METHODS.split(', ')
+  : ['PayPal', 'Stripe', 'CashOnDelivery'];
+
+export const DEFAULT_PAYMENT_METHOD = process.env.DEFAULT_PAYMENT_METHOD || 'PayPal';
+
+
 export const signInDefaultValues = {
     email: 'admin@example.com',
     password: '123456',
   };
   
 
-  export const signUpDefaultValues = {
+export const signUpDefaultValues = {
     name: 'Steve Smith',
     email: 'steve@example.com',
     password: 'password',
     confirmPassword: 'password',
   };
 
-  export const shippingAddressDefaultValues = {
+export const shippingAddressDefaultValues = {
     fullName: 'John Doe',
     streetAddress: '123 Main St',
     city: 'Anytown',
     postalCode: '12345',
     country: 'USA',
   };
+

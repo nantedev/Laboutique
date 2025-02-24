@@ -2,7 +2,13 @@
 
 import { isRedirectError } from 'next/dist/client/components/redirect-error';
 import { auth, signIn, signOut } from '@/auth';
-import { shippingAddressSchema, signInFormSchema, signUpFormSchema } from '../validator';
+import {
+  signInFormSchema,
+  signUpFormSchema,
+  shippingAddressSchema,
+  paymentMethodSchema,
+} from '../validator';
+import { z } from 'zod';
 import { hashSync } from 'bcrypt-ts-edge';
 import { prisma } from '@/db/prisma';
 import { formatError } from '../utils';
@@ -103,6 +109,32 @@ export async function updateUserAddress(data: ShippingAddress) {
     return {
       success: true,
       message: 'User updated successfully',
+    };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
+}
+
+export async function updateUserPaymentMethod(
+  data: z.infer<typeof paymentMethodSchema>
+) {
+  try {
+    const session = await auth();
+    const currentUser = await prisma.user.findFirst({
+      where: { id: session?.user?.id! },
+    });
+    if (!currentUser) throw new Error('Utilisateur non trouvé');
+
+    const paymentMethod = paymentMethodSchema.parse(data);
+
+    await prisma.user.update({
+      where: { id: currentUser.id },
+      data: { paymentMethod: paymentMethod.type },
+    });
+
+    return {
+      success: true,
+      message: 'Utilisateur mis à jour avec succès',
     };
   } catch (error) {
     return { success: false, message: formatError(error) };
