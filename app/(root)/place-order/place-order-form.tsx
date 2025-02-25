@@ -26,7 +26,7 @@ const PlaceOrderForm = () => {
         ) : (
           <Check className='w-4 h-4' />
         )}{' '}
-        Place Order
+        Passer commande
       </Button>
     );
   };
