@@ -18,12 +18,14 @@ async function generateAccessToken() {
         },
       });
 
-      if (response.ok) {
-        const jsonData = await response.json();
-        return jsonData.access_token;
-      } else {
-        const errorMessage = await response.text();
-        throw new Error(errorMessage);
-      }
+      const jsonData = await handleResponse(response);
+      return jsonData.access_token;
 }
 
+async function handleResponse(response: any) {
+    if (response.status === 200 || response.status === 201) {
+      return response.json();
+    }
+    const errorMessage = await response.text();
+    throw new Error(errorMessage);
+  }
