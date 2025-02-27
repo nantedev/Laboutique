@@ -7,11 +7,11 @@ import { cn } from '@/lib/utils';
 
 const links = [
     {
-      title: 'Profile',
+      title: 'Votre profil',
       href: '/user/profile',
     },
     {
-      title: 'Orders',
+      title: 'Commandes',
       href: '/user/orders',
     },
   ];
