@@ -13,6 +13,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import Link from 'next/link';
+import Charts from './charts';
 
 export const metadata: Metadata = {
   title: 'Admin Dashboard',
@@ -76,10 +77,14 @@ return (
       <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-7'>
         <Card className='col-span-4'>
           <CardHeader>
-            <CardTitle>Aperçu</CardTitle>
+            <CardTitle>Overview</CardTitle>
           </CardHeader>
           <CardContent className='pl-2'>
-             {/* GRAPHIQUE */}
+            <Charts
+              data={{
+                salesData: summary.salesData,
+              }}
+            />
           </CardContent>
         </Card>
         <Card className='col-span-3'>
