@@ -1,4 +1,7 @@
 import { requireAdmin } from "@/lib/auth-guard";
+import Link from 'next/link';
+import { getAllProducts } from '@/lib/actions/product.actions';
+import { formatCurrency, formatId } from '@/lib/utils';
 
 const AdminProductsPage = async (props: {searchParams: Promise<{
     page: string;
@@ -10,6 +13,15 @@ const AdminProductsPage = async (props: {searchParams: Promise<{
     const page = Number(searchParams.page) || 1;
     const searchText = searchParams.query || '';
     const category = searchParams.category || '';
+
+    const products = await getAllProducts({
+        query: searchText,
+        page,
+        category,
+      });
+      
+    console.log(products);
+    
     return (
       <div className='space-y-2'>
         <div className='flex-between'>
