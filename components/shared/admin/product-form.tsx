@@ -34,9 +34,41 @@ import {
     product?: Product;
     productId?: string;
   }) => {
+    
     const router = useRouter();
-  
-    return <>Form</>;
+    
+    const form = useForm<z.infer<typeof insertProductSchema>>({
+      resolver:
+        type === 'Update'
+          ? zodResolver(updateProductSchema)
+          : zodResolver(insertProductSchema),
+      defaultValues: product && type === 'Update' ? product : productDefaultValues,
+    });
+    
+    return (
+      <Form {...form}>
+        <form className='space-y-8'>
+          <div className='flex flex-col gap-5 md:flex-row'>
+            {/* Name */}
+            {/* Slug */}
+          </div>
+          <div className='flex flex-col gap-5 md:flex-row'>
+            {/* Category */}
+            {/* Brand */}
+          </div>
+          <div className='flex flex-col gap-5 md:flex-row'>
+            {/* Price */}
+            {/* Stock  */}
+          </div>
+          <div className='upload-field flex flex-col gap-5 md:flex-row'>
+            {/* Images */}
+          </div>
+          <div className='upload-field'>{/* Is Featured */}</div>
+          <div>{/* Description */}</div>
+          <div>{/* Submit */}</div>
+        </form>
+      </Form>
+    );
   };
 
 
