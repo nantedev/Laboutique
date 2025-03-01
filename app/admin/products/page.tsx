@@ -1,9 +1,10 @@
 import { requireAdmin } from "@/lib/auth-guard";
 import Link from 'next/link';
-import { getAllProducts } from '@/lib/actions/product.actions';
 import { formatCurrency, formatId } from '@/lib/utils';
 import Pagination from '@/components/shared/pagination';
 import { Button } from '@/components/ui/button';
+import { getAllProducts, deleteProduct } from '@/lib/actions/product.actions';
+import DeleteDialog from '@/components/shared/delete-dialog';
 import {
   Table,
   TableBody,
@@ -69,7 +70,7 @@ const AdminProductsPage = async (props: {searchParams: Promise<{
                     <Button asChild variant='outline' size='sm'>
                       <Link href={`/admin/products/${product.id}`}>Editer</Link>
                     </Button>
-                    {/* DELETE HERE */}
+                    <DeleteDialog id={product.id} action={deleteProduct} />
                   </TableCell>
                 </TableRow>
               ))}
