@@ -37,9 +37,9 @@ const AdminProductsPage = async (props: {searchParams: Promise<{
     return (
       <div className='space-y-2'>
         <div className='flex-between'>
-          <h1 className='h2-bold'>Products</h1>
+          <h1 className='h2-bold'>Produits</h1>
           <Button asChild variant='default'>
-            <Link href='/admin/products/create'>Create Product</Link>
+            <Link href='/admin/products/create'>Ajouter un produit</Link>
           </Button>
         </div>
         <div>
@@ -76,7 +76,7 @@ const AdminProductsPage = async (props: {searchParams: Promise<{
               ))}
             </TableBody>
           </Table>
-          {products?.totalPages && products.totalPages > 1 && (
+          {products.totalPages > 1 && (
             <Pagination page={page} totalPages={products.totalPages} />
           )}
         </div>
