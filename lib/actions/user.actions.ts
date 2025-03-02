@@ -7,6 +7,7 @@ import {
   signUpFormSchema,
   shippingAddressSchema,
   paymentMethodSchema,
+  updateUserSchema,
 } from '../validator';
 import { z } from 'zod';
 import { hashSync } from 'bcrypt-ts-edge';
@@ -86,7 +87,7 @@ export async function signInWithCredentials(
       where: { id: userId },
     });
   
-    if (!user) throw new Error('User not found');
+    if (!user) throw new Error('Utilisateur non trouvé');
     return user;
   }
 
@@ -99,7 +100,7 @@ export async function updateUserAddress(data: ShippingAddress) {
       where: { id: session?.user?.id! },
     });
 
-    if (!currentUser) throw new Error('User not found');
+    if (!currentUser) throw new Error('Utilisateur non trouvé');
 
     const address = shippingAddressSchema.parse(data);
 
@@ -110,7 +111,7 @@ export async function updateUserAddress(data: ShippingAddress) {
 
     return {
       success: true,
-      message: 'User updated successfully',
+      message: 'Utilisateur mis à jour',
     };
   } catch (error) {
     return { success: false, message: formatError(error) };
@@ -206,10 +207,31 @@ export async function deleteUser(id: string) {
 
     return {
       success: true,
-      message: 'User deleted successfully',
+      message: 'Utilisateur supprimé',
     };
   } catch (error) {
     return { success: false, message: formatError(error) };
   }
 }
 
+// Update user
+export async function updateUser(user: z.infer<typeof updateUserSchema>) {
+  try {
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        name: user.name,
+        role: user.role,
+      },
+    });
+
+    revalidatePath('/admin/users');
+
+    return {
+      success: true,
+      message: 'Utilisateur mis à jour',
+    };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
+}
