@@ -11,13 +11,13 @@ const currency = z
 
 // Schéma pour insérer un produit
 export const insertProductSchema = z.object({
-  name: z.string().min(3, 'Name must be at least 3 characters'),
-  slug: z.string().min(3, 'Name must be at least 3 characters'),
-  category: z.string().min(3, 'Name must be at least 3 characters'),
-  brand: z.string().min(3, 'Name must be at least 3 characters'),
-  description: z.string().min(3, 'Name must be at least 3 characters'),
+  name: z.string().min(3, 'Le nom doit contenir au moins 3 caractères'),
+  slug: z.string().min(3, 'Le slug doit contenir au moins 3 caractères'),
+  category: z.string().min(3, 'La catégorie doit contenir au moins 3 caractères'),
+  brand: z.string().min(3, 'La marque doit contenir au moins 3 caractères'),
+  description: z.string().min(3, 'La description doit contenir au moins 3 caractères'),
   stock: z.coerce.number(),
-  images: z.array(z.string()).min(1, 'Product must have at least one image'),
+  images: z.array(z.string()).min(1, 'Un produit doit avoir au moins une image'),
   isFeatured: z.boolean(),
   banner: z.string().nullable(),
   price: currency,
@@ -25,7 +25,7 @@ export const insertProductSchema = z.object({
 
 // Schema for updating a product
 export const updateProductSchema = insertProductSchema.extend({
-  id: z.string().min(1, 'Id is required'),
+  id: z.string().min(1, 'Id est requis'),
 });
 
 
@@ -124,3 +124,9 @@ export const updateProfileSchema = z.object({
     email: z.string().min(3, 'Email doit contenir au moins 3 caractères'),
   });
 
+// Update User Schema
+export const updateUserSchema = updateProfileSchema.extend({
+  id: z.string().min(1, 'Id est requis'),
+  name: z.string().min(3, 'Nom doit contenir au moins 3 caractères'),
+  role: z.string().min(1, 'Role est requis'),
+});
