@@ -4,6 +4,7 @@ import {
   getLatestProducts,
 } from '@/lib/actions/product.actions';
 import { ProductCarousel } from '@/components/shared/product/product-carousel';
+import ViewAllProductsButton from '@/components/view-all-products-button';
 
 const HomePage = async () => {
 
@@ -14,6 +15,7 @@ const HomePage = async () => {
     <div className='space-y-8'>
       {featuredProducts.length > 0 && <ProductCarousel data={featuredProducts} />}
       <ProductList title='Nouveautés' data={latestProducts} />
+      <ViewAllProductsButton />
     </div>
   );
 };
