@@ -31,17 +31,19 @@ const OrdersPage = async (props: {
 
   return (
     <div className='space-y-2'>
-       <h1 className='h2-bold'>Commandes</h1>
-          {searchText && (
-            <div>
-              Filtrer par <i>&quot;{searchText}&quot;</i>{' '}
-              <Link href={`/admin/orders`}>
-                <Button variant='outline' size='sm'>
-                  Supprimer le filtre
-                </Button>
-              </Link>
-            </div>
-          )}
+      <div className='flex items-center gap-3'>
+         <h1 className='h2-bold'>Commandes</h1>
+            {searchText && (
+              <div>
+                Filtrées par <i>&quot;{searchText}&quot;</i>{' '}
+                <Link href={`/admin/orders`}>
+                  <Button variant='outline' size='sm'>
+                    Supprimer le filtre
+                  </Button>
+                </Link>
+              </div>
+            )}
+      </div>
       <div className='overflow-x-auto'>
         <Table>
           <TableHeader>

@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 
 const links = [
   {
-    title: "vue d'ensemble",
+    title: "Aperçu",
     href: '/admin/overview',
   },
   {
