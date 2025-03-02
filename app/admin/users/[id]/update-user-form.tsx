@@ -19,12 +19,13 @@ import {
 } from '@/components/ui/select';
 import { toast } from 'sonner';
 import { USER_ROLES } from '@/lib/constants';
-import { updateUserSchema } from '@/lib/validator';
 import { ControllerRenderProps } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { updateUserSchema } from '@/lib/validator';
+import { updateUser } from '@/lib/actions/user.actions';
 
 const UpdateUserForm = ({
   user,
@@ -38,9 +39,29 @@ const UpdateUserForm = ({
     defaultValues: user,
   });
 
+  // Handle submit
+  const onSubmit = async (values: z.infer<typeof updateUserSchema>) => {
+    try {
+      const res = await updateUser({
+        ...values,
+        id: user.id,
+      });
+  
+      if (!res.success) return toast.error(res.message);
+  
+      toast.success(res.message);
+  
+      form.reset();
+      router.push(`/admin/users`);
+    } catch (error) {
+      toast.error((error as Error).message);
+    }
+  };
+  
+
   return (
     <Form {...form}>
-      <form className='space-y-4'>
+      <form method='post' onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
       {/* Email */}
         <div>
         <FormField
@@ -54,13 +75,13 @@ const UpdateUserForm = ({
             <FormItem className='w-full'>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                <Input disabled={true} placeholder='Enter user email' {...field} />
+                <Input disabled={true} placeholder='Entrer votre email' {...field} />
                 </FormControl>
                 <FormMessage />
             </FormItem>
             )}
         />
-        </div>;
+        </div>
         { /* Name */ }
           <div>
             <FormField
@@ -72,15 +93,15 @@ const UpdateUserForm = ({
                 field: ControllerRenderProps<z.infer<typeof updateUserSchema>, 'name'>;
               }) => (
                 <FormItem className='w-full'>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Nom</FormLabel>
                   <FormControl>
-                    <Input placeholder='Enter user name' {...field} />
+                    <Input placeholder='Entrer votre nom' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-          </div>;
+          </div>
           { /* Role */ }
           <div>
             <FormField
@@ -92,11 +113,11 @@ const UpdateUserForm = ({
                 field: ControllerRenderProps<z.infer<typeof updateUserSchema>, 'role'>;
               }) => (
                 <FormItem className=' items-center'>
-                  <FormLabel>Role</FormLabel>
+                  <FormLabel>Rôle</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value.toString()}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder='Select a role' />
+                        <SelectValue placeholder='Selectionner un rôle' />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -111,14 +132,14 @@ const UpdateUserForm = ({
                 </FormItem>
               )}
             />
-          </div>;
+          </div>
           <div className='flex-between'>
             <Button
                 type='submit'
                 className='w-full'
                 disabled={form.formState.isSubmitting}
             >
-                {form.formState.isSubmitting ? 'Envoi en cours...' : `Update User `}
+                {form.formState.isSubmitting ? 'Envoi en cours...' : `Mettre à jour`}
             </Button>
             </div>
       </form>
