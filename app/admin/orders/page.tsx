@@ -15,22 +15,33 @@ export const metadata: Metadata = {
 };
 
 const OrdersPage = async (props: {
-  searchParams: Promise<{ page: string }>;
+  searchParams: Promise<{ page: string; query: string }>;
 }) => {
   await requireAdmin();
-  const { page = '1' } = await props.searchParams;
+  const { page = '1', query: searchText } = await props.searchParams;
 
   const session = await auth();
   if (session?.user.role !== 'admin')
-    throw new Error('admin permission required');
+    throw new Error('Permission requis');
 
   const orders = await getAllOrders({
     page: Number(page),
+    query: searchText,
   });
 
   return (
     <div className='space-y-2'>
-      <h2 className='h2-bold'>Commandes</h2>
+       <h1 className='h2-bold'>Commandes</h1>
+          {searchText && (
+            <div>
+              Filtrer par <i>&quot;{searchText}&quot;</i>{' '}
+              <Link href={`/admin/orders`}>
+                <Button variant='outline' size='sm'>
+                  Supprimer le filtre
+                </Button>
+              </Link>
+            </div>
+          )}
       <div className='overflow-x-auto'>
         <Table>
           <TableHeader>
