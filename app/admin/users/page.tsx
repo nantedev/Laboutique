@@ -1,6 +1,6 @@
 import { requireAdmin } from '@/lib/auth-guard';
 import { auth } from '@/auth';
-import DeleteDialog from '@/components/shared/delete-dialog';
+
 import Pagination from '@/components/shared/pagination';
 import { Button } from '@/components/ui/button';
 import {
@@ -11,10 +11,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { getAllUsers } from '@/lib/actions/user.actions';
 import { formatId } from '@/lib/utils';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import DeleteDialog from '@/components/shared/delete-dialog';
+import { getAllUsers, deleteUser } from '@/lib/actions/user.actions';
 
 const AdminUserPage = async (props: {
     searchParams: Promise<{
@@ -52,7 +53,7 @@ const AdminUserPage = async (props: {
                       <Button asChild variant='outline' size='sm'>
                         <Link href={`/admin/users/${user.id}`}>Edit</Link>
                       </Button>
-                      {/* DELETE DIALOG HERE */}
+                      <DeleteDialog id={user.id} action={deleteUser} />
                     </TableCell>
                   </TableRow>
                 ))}
