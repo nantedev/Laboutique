@@ -130,3 +130,17 @@ export const updateUserSchema = updateProfileSchema.extend({
   name: z.string().min(3, 'Nom doit contenir au moins 3 caractères'),
   role: z.string().min(1, 'Role est requis'),
 });
+
+// Insert Review Schema
+export const insertReviewSchema = z.object({
+  title: z.string().min(3, 'Le titre doit contenir au moins 3 caractères'),
+  description: z.string().min(3, 'La description doit contenir au moins 3 caractères'),
+  productId: z.string().min(1, 'Le produit est requis'),
+  userId: z.string().min(1, "L'utilisateur est requis"),
+  rating: z.coerce
+    .number()
+    .int()
+    .min(1, 'La note doit être d\'au moins 1')
+    .max(5, 'La note doit être au maximum 5'),
+});
+
