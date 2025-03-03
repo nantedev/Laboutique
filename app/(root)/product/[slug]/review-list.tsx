@@ -41,8 +41,15 @@ const ReviewList = ({
     }, [productId]);
 
     const reload = async () => {
-      console.log('review submitted');
+      try {
+        const res = await getReviews({ productId });
+        setReviews([...res.data]);
+      } catch (err) {
+        console.log(err);
+        toast.error('Error in fetching reviews');
+      }
     };
+    
 
     return (
       <div className='space-y-4'>
