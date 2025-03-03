@@ -38,6 +38,7 @@ import { reviewFormDefaultValues } from '@/lib/constants';
 import { insertReviewSchema } from '@/lib/validator';
 import { z } from 'zod';
 import { StarIcon } from 'lucide-react';
+import { createUpdateReview } from '@/lib/actions/review.actions';
 
 type CustomerReview = z.infer<typeof insertReviewSchema>;
 
@@ -49,7 +50,7 @@ const ReviewForm = ({
 }: {
   userId: string;
   productId: string;
-  onReviewSubmitted?: () => void;
+  onReviewSubmitted: () => void;
 }) => {
 
     const [open, setOpen] = useState(false);
@@ -60,6 +61,24 @@ const ReviewForm = ({
       defaultValues: reviewFormDefaultValues,
     });
 
+    // Form submit handler
+    const onSubmit: SubmitHandler<CustomerReview> = async (values) => {
+      const res = await createUpdateReview({ ...values, productId });
+  
+      if (!res.success) return toast.error(res.message);
+  
+      setOpen(false);
+      onReviewSubmitted();
+  
+      toast.success(res.message);
+  };
+  
+    const handleOpenForm = () => {
+      form.setValue('productId', productId);
+      form.setValue('userId', userId);
+    
+      setOpen(true);
+    };
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -68,7 +87,7 @@ const ReviewForm = ({
           </Button>
           <DialogContent className='sm:max-w-[425px]'>
             <Form {...form}>
-              <form method='post'>
+              <form method='post' onSubmit={form.handleSubmit(onSubmit)}>
                 <DialogHeader>
                   <DialogTitle>Write a review</DialogTitle>
                   <DialogDescription>
