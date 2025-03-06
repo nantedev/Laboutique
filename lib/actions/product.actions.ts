@@ -103,7 +103,7 @@ export async function deleteProduct(id: string) {
       where: { id },
     });
 
-    if (!productExists) throw new Error('Product not found');
+    if (!productExists) throw new Error('Produit non trouvé');
 
     await prisma.product.delete({ where: { id } });
 
@@ -112,7 +112,7 @@ export async function deleteProduct(id: string) {
 
     return {
       success: true,
-      message: 'Product deleted successfully',
+      message: 'Produit supprimé avec succès',
     };
   } catch (error) {
     return { success: false, message: formatError(error) };
@@ -131,7 +131,7 @@ export async function createProduct(data: z.infer<typeof insertProductSchema>) {
 
     return {
       success: true,
-      message: 'Product created successfully',
+      message: 'Produit créé avec succés',
     };
   } catch (error) {
     return { success: false, message: formatError(error) };
@@ -147,7 +147,7 @@ export async function updateProduct(data: z.infer<typeof updateProductSchema>) {
       where: { id: product.id },
     });
 
-    if (!productExists) throw new Error('Product not found');
+    if (!productExists) throw new Error('Produit non trouvé');
 
     // Update product
     await prisma.product.update({ where: { id: product.id }, data: product });
@@ -156,7 +156,7 @@ export async function updateProduct(data: z.infer<typeof updateProductSchema>) {
 
     return {
       success: true,
-      message: 'Product updated successfully',
+      message: 'Produit mis à jour avec succès',
     };
   } catch (error) {
     return { success: false, message: formatError(error) };

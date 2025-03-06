@@ -70,7 +70,7 @@ export async function signInWithCredentials(
         password: plainPassword,
       });
   
-      return { success: true, message: 'User created successfully' };
+      return { success: true, message: 'Utilisateur créé avec succès' };
     } catch (error) {
       if (isRedirectError(error)) {
         throw error;
