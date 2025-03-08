@@ -95,7 +95,7 @@ const DealCountdown = () => {
         <p>
           Profitez d'une expérience de shopping unique avec nos Offres du Mois ! 
           Chaque achat vous offre des avantages exclusifs et des promotions spéciales. 
-          Ne manquez pas cette opportunité ! 🎁🛒
+          Ne manquez pas cette opportunité ! 
         </p>
         <ul className='grid grid-cols-4'>
           <StatBox label='Jours' value={time.jours} />

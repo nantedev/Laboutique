@@ -31,7 +31,7 @@ const AdminOverviewPage = async () => {
   // Get order summary
   const summary = await getOrderSummary();
 
-return (
+  return (
     <div className='space-y-2'>
       <h1 className='h2-bold'>Tableau de bord</h1>
       <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
@@ -42,7 +42,9 @@ return (
           </CardHeader>
           <CardContent>
             <div className='text-2xl font-bold'>
-              {formatCurrency(summary.totalSales._sum.totalPrice!.toString())}
+              {summary.totalSales._sum.totalPrice
+                ? formatCurrency(summary.totalSales._sum.totalPrice.toString())
+                : 'N/A'}
             </div>
           </CardContent>
         </Card>
@@ -79,7 +81,7 @@ return (
       <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-7'>
         <Card className='col-span-4'>
           <CardHeader>
-            <CardTitle>Overview</CardTitle>
+            <CardTitle>Aperçu</CardTitle>
           </CardHeader>
           <CardContent className='pl-2'>
             <Charts

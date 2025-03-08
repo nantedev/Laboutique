@@ -53,19 +53,19 @@ const ReviewList = ({
 
     return (
       <div className='space-y-4'>
-        {reviews.length === 0 && <div>No reviews yet</div>}
+        {reviews.length === 0 && <div>Pas encore d'avis.</div>}
         {userId ? (
           <ReviewForm userId={userId} productId={productId} onReviewSubmitted={reload} />
         ) : (
           <div>
-            Please{' '}
+            S'il vous plait{' '}
             <Link
               className='text-primary px-2'
               href={`/api/auth/signin?callbackUrl=/product/${productSlug}`}
             >
-              sign in
+              se connecter
             </Link>{' '}
-            to write a review
+            pour écrire un avis.
           </div>
         )}
         <div className='flex flex-col gap-3'>
@@ -85,7 +85,7 @@ const ReviewList = ({
                   
                   <div className='flex items-center'>
                     <User className='mr-1 h-3 w-3' />
-                    {review.user ? review.user.name : 'Deleted User'}
+                    {review.user ? review.user.name : 'Utilisateur supprimé'}
                   </div>
                   <div className='flex items-center'>
                     <Calendar className='mr-1 h-3 w-3' />

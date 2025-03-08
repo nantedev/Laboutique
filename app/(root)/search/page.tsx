@@ -11,30 +11,30 @@ import Link from 'next/link';
 
 const prices = [
   {
-    name: '1 to 50€',
+    name: '1 à 50€',
     value: '1-50',
   },
   {
-    name: '51 to 100€',
+    name: '51 à 100€',
     value: '51-100',
   },
   {
-    name: '101 to 200€',
+    name: '101 à 200€',
     value: '101-200',
   },
   {
-    name: '201 to 500€',
+    name: '201 à 500€',
     value: '201-500',
   },
   {
-    name: '501 to 1000€',
+    name: '501 à 1000€',
     value: '501-1000',
   },
 ];
 
 const ratings = [4, 3, 2, 1];
 
-const sortOrders = ['newest', 'lowest', 'highest', 'rating'];
+const sortOrders = ['Plus récent', 'Prix le plus bas', 'Prix le plus élevé', 'Meilleure note'];
 
 
 
@@ -133,7 +133,7 @@ const SearchPage = async (props: {
   <div className='grid md:grid-cols-5 md:gap-5'>
     <div className='filter-links'>
       {/* Category Links */}
-      <div className='text-xl mt-3 mb-2'>Department</div>
+      <div className='text-xl mt-3 mb-2'>Rayon</div>
       <div>
         <ul className='space-y-1'>
           <li>
@@ -143,7 +143,7 @@ const SearchPage = async (props: {
               }`}
               href={getFilterUrl({ c: 'all' })}
             >
-              Any
+              Indifférent
             </Link>
           </li>
           {categories.map((x) => (
@@ -162,14 +162,14 @@ const SearchPage = async (props: {
         /* Price Links */
       }
       <div>
-        <div className='text-xl mt-8 mb-2'>Price</div>
+        <div className='text-xl mt-8 mb-2'>Prix</div>
         <ul className='space-y-1'>
           <li>
             <Link
               className={`  ${'all' === price && 'font-bold'}`}
               href={getFilterUrl({ p: 'all' })}
             >
-              Any
+              Indifférent
             </Link>
           </li>
           {prices.map((p) => (
@@ -188,14 +188,14 @@ const SearchPage = async (props: {
       /* Rating Links */
     }
     <div>
-      <div className='text-xl mt-8 mb-2'>Customer Review</div>
+      <div className='text-xl mt-8 mb-2'>Avis des clients</div>
       <ul className='space-y-1'>
         <li>
           <Link
             href={getFilterUrl({ r: 'all' })}
             className={`  ${'all' === rating && 'font-bold'}`}
           >
-            Any
+            Indifférent
           </Link>
         </li>
         {ratings.map((r) => (
@@ -204,7 +204,7 @@ const SearchPage = async (props: {
               href={getFilterUrl({ r: `${r}` })}
               className={`${r.toString() === rating && 'font-bold'}`}
             >
-              {`${r} stars & up`}
+              {`${r} étoiles & plus`}
             </Link>
           </li>
         ))}
@@ -231,7 +231,7 @@ const SearchPage = async (props: {
       </div>
       <div>
         {/* SORTING */}
-        Sort by{' '}
+        Tri par:{' '}
           {sortOrders.map((s) => (
             <Link
               key={s}
@@ -245,7 +245,7 @@ const SearchPage = async (props: {
     </div>
 
       <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
-        {products!.data.length === 0 && <div>No product found</div>}
+        {products!.data.length === 0 && <div>Aucun produit trouvé</div>}
         {products!.data.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

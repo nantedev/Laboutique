@@ -35,7 +35,7 @@ export const addItemToCart = async (data: z.infer<typeof cartItemSchema>) => {
   try {
     // Check for session cart cookie
     const sessionCartId = (await cookies()).get('sessionCartId')?.value;
-    if (!sessionCartId) throw new Error('Cart Session not found');
+    if (!sessionCartId) throw new Error('Panier de la session non trouvé');
     // Get session and user ID
     const session = await auth();
     const userId = session?.user?.id as string | undefined;
@@ -48,7 +48,7 @@ export const addItemToCart = async (data: z.infer<typeof cartItemSchema>) => {
       where: { id: item.productId },
     });
 
-    if (!product) throw new Error('Product not found');
+    if (!product) throw new Error('Produit non trouvé');
     if (!cart) {
       // Create new cart object
       const newCart = insertCartSchema.parse({
@@ -67,7 +67,7 @@ export const addItemToCart = async (data: z.infer<typeof cartItemSchema>) => {
     
       return {
         success: true,
-        message: 'Item added to cart successfully',
+        message: "Article ajouté au panier avec succès",
       };
     } else {
       // Check for existing item in cart
@@ -77,7 +77,7 @@ export const addItemToCart = async (data: z.infer<typeof cartItemSchema>) => {
       // If not enough stock, throw error
       if (existItem) {
         if (product.stock < existItem.qty + 1) {
-          throw new Error('Not enough stock');
+          throw new Error('Pas assez de stock');
         }
     
         // Increase quantity of existing item
@@ -86,7 +86,7 @@ export const addItemToCart = async (data: z.infer<typeof cartItemSchema>) => {
         )!.qty = existItem.qty + 1;
       } else {
         // If stock, add item to cart
-        if (product.stock < 1) throw new Error('Not enough stock');
+        if (product.stock < 1) throw new Error('Pas assez de stock');
         cart.items.push(item);
       }
     
@@ -104,9 +104,9 @@ export const addItemToCart = async (data: z.infer<typeof cartItemSchema>) => {
       return {
         success: true,
         message: `${product.name} ${
-          existItem ? 'updated in' : 'added to'
-        } cart successfully`,
-      };
+          existItem ? 'mis à jour dans' : 'ajouté au'
+        } panier avec succès`,
+      };      
     }
    
   } catch (error) {
@@ -151,23 +151,23 @@ export async function removeItemFromCart (productId: string) {
   try {
     // Get session cart id
     const sessionCartId = (await cookies()).get('sessionCartId')?.value;
-    if (!sessionCartId) throw new Error('Cart Session not found');
+    if (!sessionCartId) throw new Error('Panier Session non trouvé');
 
     // Get product
     const product = await prisma.product.findFirst({
       where: { id: productId },
     });
-    if (!product) throw new Error('Product not found');
+    if (!product) throw new Error('Produit non trouvé');
 
     // Get user cart
     const cart = await getMyCart();
-    if (!cart) throw new Error('Cart not found');
+    if (!cart) throw new Error('Panier non trouvé');
 
     // Check if cart has item
     const exist = (cart.items as CartItem[]).find(
       (x) => x.productId === productId
     );
-    if (!exist) throw new Error('Item not found');
+    if (!exist) throw new Error('Article non trouvé');
 
     // Check if cart has only one item
     if (exist.qty === 1) {
@@ -197,10 +197,11 @@ export async function removeItemFromCart (productId: string) {
       success: true,
       message: `${product.name}  ${
         (cart.items as CartItem[]).find((x) => x.productId === productId)
-          ? 'updated in'
-          : 'removed from'
-      } cart successfully`,
+          ? 'mis à jour dans'
+          : 'retiré du'
+      } panier avec succès`,
     };
+   
   } catch (error) {
     return { success: false, message: formatError(error) };
   }

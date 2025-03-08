@@ -63,9 +63,9 @@ const PaymentMethodForm = ({
           onSubmit={form.handleSubmit(onSubmit)}
           className='space-y-4'
         >
-          <h1 className='h2-bold mt-4'>Payment Method</h1>
+          <h1 className='h2-bold mt-4'>Méthode de paiement</h1>
           <p className='text-sm text-muted-foreground'>
-            Please select your preferred payment method
+          Veuillez sélectionner votre méthode de paiement préférée
           </p>
           <div className='flex flex-col gap-5 md:flex-row'>
             <FormField
@@ -108,7 +108,7 @@ const PaymentMethodForm = ({
               ) : (
                 <ArrowRight className='w-4 h-4' />
               )}
-              Continue
+              Continuer
             </Button>
           </div>
         </form>

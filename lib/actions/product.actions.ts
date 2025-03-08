@@ -76,11 +76,11 @@ export async function getAllProducts({
       ...priceFilter,
     },
     orderBy:
-      sort === 'lowest'
+      sort === 'Prix le plus bas'
         ? { price: 'asc' }
-        : sort === 'highest'
+        : sort === 'Prix le plus élevé'
         ? { price: 'desc' }
-        : sort === 'rating'
+        : sort === 'Meilleure note'
         ? { rating: 'desc' }
         : { createdAt: 'desc' },
     skip: (page - 1) * limit,
@@ -103,7 +103,7 @@ export async function deleteProduct(id: string) {
       where: { id },
     });
 
-    if (!productExists) throw new Error('Product not found');
+    if (!productExists) throw new Error('Produit non trouvé');
 
     await prisma.product.delete({ where: { id } });
 
@@ -112,7 +112,7 @@ export async function deleteProduct(id: string) {
 
     return {
       success: true,
-      message: 'Product deleted successfully',
+      message: 'Produit supprimé avec succès',
     };
   } catch (error) {
     return { success: false, message: formatError(error) };
@@ -131,7 +131,7 @@ export async function createProduct(data: z.infer<typeof insertProductSchema>) {
 
     return {
       success: true,
-      message: 'Product created successfully',
+      message: 'Produit créé avec succés',
     };
   } catch (error) {
     return { success: false, message: formatError(error) };
@@ -147,7 +147,7 @@ export async function updateProduct(data: z.infer<typeof updateProductSchema>) {
       where: { id: product.id },
     });
 
-    if (!productExists) throw new Error('Product not found');
+    if (!productExists) throw new Error('Produit non trouvé');
 
     // Update product
     await prisma.product.update({ where: { id: product.id }, data: product });
@@ -156,7 +156,7 @@ export async function updateProduct(data: z.infer<typeof updateProductSchema>) {
 
     return {
       success: true,
-      message: 'Product updated successfully',
+      message: 'Produit mis à jour avec succès',
     };
   } catch (error) {
     return { success: false, message: formatError(error) };
@@ -191,5 +191,60 @@ export async function getFeaturedProducts() {
   });
 
   return convertToPlainObject(data);
+}
+
+// Remove image from product
+export async function removeProductImage(productId: string, imageUrl: string) {
+  try {
+    const product = await prisma.product.findFirst({
+      where: { id: productId },
+    });
+
+    if (!product) throw new Error('Produit non trouvé');
+
+    // Filter out the image to remove
+    const updatedImages = product.images.filter((img: string) => img !== imageUrl);
+
+    // Update the product with the new images array
+    await prisma.product.update({
+      where: { id: productId },
+      data: { images: updatedImages },
+    });
+
+    revalidatePath('/admin/products');
+
+    return {
+      success: true,
+      message: 'Image supprimée avec succès',
+    };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
+}
+
+// Remove banner from product
+export async function removeProductBanner(productId: string) {
+  try {
+    const product = await prisma.product.findFirst({
+      where: { id: productId },
+    });
+
+    if (!product) throw new Error('Produit non trouvé');
+
+    // Update the product to remove the banner
+    await prisma.product.update({
+      where: { id: productId },
+      data: { banner: null },
+    });
+
+    revalidatePath('/admin/products');
+
+    return {
+      success: true,
+      message: 'Bannière supprimée avec succès',
+    };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
 }
 
