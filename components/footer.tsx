@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className='border-t'>
       <div className='p-5 flex-center'>
-        {currentYear} {APP_NAME}. Made by nantedev.
+        {currentYear} {APP_NAME} par nantedev.
       </div>
     </footer>
   );

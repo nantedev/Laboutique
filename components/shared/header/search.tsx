@@ -18,11 +18,11 @@ const Search = async () => {
       <div className='flex w-full max-w-sm items-center space-x-2'>
         <Select name='category'>
           <SelectTrigger className='w-[180px]'>
-            <SelectValue placeholder='All' />
+            <SelectValue placeholder='Tout le site' />
           </SelectTrigger>
           <SelectContent>
             <SelectItem key={'All'} value={'all'}>
-              Partout
+              Tout le site
             </SelectItem>
             {categories.map((x) => (
               <SelectItem key={x.category} value={x.category}>

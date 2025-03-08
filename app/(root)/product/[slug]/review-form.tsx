@@ -89,15 +89,15 @@ const ReviewForm = ({
     return (
         <Dialog open={open} onOpenChange={setOpen}>
           <Button onClick={handleOpenForm} variant='default'>
-            Write a review
+            Ecrire un avis
           </Button>
           <DialogContent className='sm:max-w-[425px]'>
             <Form {...form}>
               <form method='post' onSubmit={form.handleSubmit(onSubmit)}>
                 <DialogHeader>
-                  <DialogTitle>Write a review</DialogTitle>
+                  <DialogTitle>Ecrire un avis</DialogTitle>
                   <DialogDescription>
-                    Share your thoughts with other customers
+                    Partagez votre avis avec d'autres clients
                   </DialogDescription>
                 </DialogHeader>
                 <div className='grid gap-4 py-4'>
@@ -106,9 +106,9 @@ const ReviewForm = ({
                     name='title'
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Title</FormLabel>
+                        <FormLabel>Titre</FormLabel>
                         <FormControl>
-                          <Input placeholder='Enter title' {...field} />
+                          <Input placeholder='Saisissez un titre' {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -132,14 +132,14 @@ const ReviewForm = ({
                     name='rating'
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Rating</FormLabel>
+                        <FormLabel>Note</FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           value={field.value.toString()}
                         >
                           <FormControl>
                             <SelectTrigger>
-                              <SelectValue placeholder='Select a rating' />
+                              <SelectValue placeholder='Sélectionnez une note' />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
@@ -162,7 +162,7 @@ const ReviewForm = ({
                     className='w-full'
                     disabled={form.formState.isSubmitting}
                   >
-                    {form.formState.isSubmitting ? 'Submitting...' : 'Submit'}
+                    {form.formState.isSubmitting ? 'Soumission en cours...' : 'Soumettre'}
                   </Button>
                 </DialogFooter>
               </form>

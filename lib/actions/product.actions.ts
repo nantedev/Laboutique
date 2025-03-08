@@ -76,11 +76,11 @@ export async function getAllProducts({
       ...priceFilter,
     },
     orderBy:
-      sort === 'lowest'
+      sort === 'Prix le plus bas'
         ? { price: 'asc' }
-        : sort === 'highest'
+        : sort === 'Prix le plus élevé'
         ? { price: 'desc' }
-        : sort === 'rating'
+        : sort === 'Meilleure note'
         ? { rating: 'desc' }
         : { createdAt: 'desc' },
     skip: (page - 1) * limit,
