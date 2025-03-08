@@ -222,3 +222,29 @@ export async function removeProductImage(productId: string, imageUrl: string) {
   }
 }
 
+// Remove banner from product
+export async function removeProductBanner(productId: string) {
+  try {
+    const product = await prisma.product.findFirst({
+      where: { id: productId },
+    });
+
+    if (!product) throw new Error('Produit non trouvé');
+
+    // Update the product to remove the banner
+    await prisma.product.update({
+      where: { id: productId },
+      data: { banner: null },
+    });
+
+    revalidatePath('/admin/products');
+
+    return {
+      success: true,
+      message: 'Bannière supprimée avec succès',
+    };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
+}
+

@@ -10,7 +10,7 @@ import {
   } from '@/components/ui/form';
   import { Input } from '@/components/ui/input';
   import { toast } from 'sonner';
-  import { createProduct, updateProduct, removeProductImage } from '@/lib/actions/product.actions';
+  import { createProduct, updateProduct, removeProductImage, removeProductBanner } from '@/lib/actions/product.actions';
   import { productDefaultValues } from '@/lib/constants';
   import { insertProductSchema, updateProductSchema } from '@/lib/validator';
   import { ControllerRenderProps, SubmitHandler } from 'react-hook-form';
@@ -311,13 +311,35 @@ const ProductForm = ({
                     )}
                   />
                   {isFeatured && banner && (
-                    <Image
-                      src={banner}
-                      alt='banner image'
-                      className=' w-full object-cover object-center rounded-sm'
-                      width={1920}
-                      height={680}
-                    />
+                    <div className="relative">
+                      <Image
+                        src={banner}
+                        alt='banner image'
+                        className='w-full object-cover object-center rounded-sm'
+                        width={1920}
+                        height={680}
+                      />
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          if (type === 'Update' && productId) {
+                            const res = await removeProductBanner(productId);
+                            if (res.success) {
+                              form.setValue('banner', '');
+                              toast.success(res.message);
+                            } else {
+                              toast.error(res.message);
+                            }
+                          } else {
+                            // For new products, just update the form state
+                            form.setValue('banner', '');
+                          }
+                        }}
+                        className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600"
+                      >
+                        ×
+                      </button>
+                    </div>
                   )}
                   {isFeatured && !banner && (
                     <UploadButton
