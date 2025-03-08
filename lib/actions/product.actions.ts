@@ -193,3 +193,32 @@ export async function getFeaturedProducts() {
   return convertToPlainObject(data);
 }
 
+// Remove image from product
+export async function removeProductImage(productId: string, imageUrl: string) {
+  try {
+    const product = await prisma.product.findFirst({
+      where: { id: productId },
+    });
+
+    if (!product) throw new Error('Produit non trouvé');
+
+    // Filter out the image to remove
+    const updatedImages = product.images.filter((img: string) => img !== imageUrl);
+
+    // Update the product with the new images array
+    await prisma.product.update({
+      where: { id: productId },
+      data: { images: updatedImages },
+    });
+
+    revalidatePath('/admin/products');
+
+    return {
+      success: true,
+      message: 'Image supprimée avec succès',
+    };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
+}
+
