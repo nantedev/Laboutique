@@ -65,7 +65,7 @@ const OrdersPage = async (props: {
                 <TableCell>
                   {order.isPaid && order.paidAt
                     ? formatDateTime(order.paidAt).dateTime
-                    : 'Not Paid'}
+                    : 'Non payée'}
                 </TableCell>
                 <TableCell>
                   {order.isDelivered && order.deliveredAt

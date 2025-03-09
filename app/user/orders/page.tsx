@@ -50,7 +50,7 @@ const OrdersPage = async (props: {searchParams: Promise<{ page: string }>}) => {
                 <TableCell>
                   {order.isPaid && order.paidAt
                     ? formatDateTime(order.paidAt).dateTime
-                    : 'not paid'}
+                    : 'Non payée'}
                 </TableCell>
                 <TableCell>
                   {order.isDelivered && order.deliveredAt
