@@ -28,7 +28,7 @@ const OrdersPage = async (props: {searchParams: Promise<{ page: string }>}) => {
 
     return (
       <div className='space-y-2'>
-      <h2 className='h2-bold'>Commandandes</h2>
+      <h2 className='h2-bold'>Commandes</h2>
       <div className='overflow-x-auto'>
         <Table>
           <TableHeader>
@@ -36,8 +36,8 @@ const OrdersPage = async (props: {searchParams: Promise<{ page: string }>}) => {
               <TableHead>ID</TableHead>
               <TableHead>DATE</TableHead>
               <TableHead>TOTAL</TableHead>
-              <TableHead>PAYÉ</TableHead>
-              <TableHead>LIVRÉ</TableHead>
+              <TableHead>PAIEMENT</TableHead>
+              <TableHead>LIVRAISON</TableHead>
               <TableHead>ACTIONS</TableHead>
             </TableRow>
           </TableHeader>

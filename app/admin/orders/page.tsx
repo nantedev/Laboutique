@@ -51,8 +51,8 @@ const OrdersPage = async (props: {
                 <TableHead>ID</TableHead>
                 <TableHead>DATE</TableHead>
                 <TableHead>TOTAL</TableHead>
-                <TableHead>PAYÉ</TableHead>
-                <TableHead>LIVRÉ</TableHead>
+                <TableHead>PAIEMENT</TableHead>
+                <TableHead>LIVRAISON</TableHead>
                 <TableHead>ACTIONS</TableHead>
             </TableRow>
           </TableHeader>
