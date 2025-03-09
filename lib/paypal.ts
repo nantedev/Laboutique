@@ -61,7 +61,7 @@ export async function generateAccessToken() {
       return jsonData.access_token;
 }
 
-async function handleResponse(response: any) {
+async function handleResponse(response: Response) {
     if (response.status === 200 || response.status === 201) {
       return response.json();
     }

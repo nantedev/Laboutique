@@ -91,13 +91,12 @@ const OrderDetailsTable = ({
             <Button
                 type='button'
                 disabled={isPending}
-                onClick={() =>
-                startTransition(async () => {
-                    const res = await updateOrderToPaidByCOD(order.id);
-                    
-                    res.success ? toast.success(res.message) : toast.error(res.message);
-                })
-                }
+                onClick={() => {
+                    startTransition(async () => {
+                        const res = await updateOrderToPaidByCOD(order.id);
+                        res.success ? toast.success(res.message) : toast.error(res.message);
+                    });
+                }}
             >
                 {isPending ? 'Traitement...' : 'Marquer comme payée'}
             </Button>
@@ -112,13 +111,12 @@ const OrderDetailsTable = ({
             <Button
                 type='button'
                 disabled={isPending}
-                onClick={() =>
-                startTransition(async () => {
-                    const res = await deliverOrder(order.id);
-        
-                    res.success ? toast.success(res.message) : toast.error(res.message);
-                })
-                }
+                onClick={() => {
+                    startTransition(async () => {
+                        const res = await deliverOrder(order.id);
+                        res.success ? toast.success(res.message) : toast.error(res.message);
+                    });
+                }}
             >
                 {isPending ? 'Traitement...' : 'Marquer comme livrée'}
             </Button>

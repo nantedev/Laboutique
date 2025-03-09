@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Calendar, Check, User } from 'lucide-react';
+import { Calendar, User } from 'lucide-react';
 import { formatDateTime } from '@/lib/utils';
 import { toast } from 'sonner';
 import Link from 'next/link';
@@ -53,12 +53,12 @@ const ReviewList = ({
 
     return (
       <div className='space-y-4'>
-        {reviews.length === 0 && <div>Pas encore d'avis.</div>}
+        {reviews.length === 0 && <div>Pas encore d&apos;avis.</div>}
         {userId ? (
           <ReviewForm userId={userId} productId={productId} onReviewSubmitted={reload} />
         ) : (
           <div>
-            S'il vous plait{' '}
+            S&apos;il vous plait{' '}
             <Link
               className='text-primary px-2'
               href={`/api/auth/signin?callbackUrl=/product/${productSlug}`}
