@@ -76,7 +76,7 @@ const DealCountdown = () => {
             </Button>
           </div>
         </div>
-        <div className='flex justify-center'>
+        <div className='flex justify'>
           <Image
             src='/images/promo.jpg'
             alt='promotion'
@@ -109,12 +109,12 @@ const DealCountdown = () => {
           </Button>
         </div>
       </div>
-      <div className='flex justify-center'>
+      <div className='flex justify-end'>
         <Image
           src='/images/promo.jpg'
           alt='promotion'
-          width={300}
-          height={200}
+          width={400}
+          height={400}
         />
       </div>
     </section>
