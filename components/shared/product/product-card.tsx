@@ -16,7 +16,7 @@ const ProductCard = ({ product }: { product: Product }) => {
             priority={true}
             src={product.images![0]}
             alt={product.name}
-            className='aspect-square object-cover rounded'
+            className='aspect-[2/3] object-cover rounded-t-lg'
             height={300}
             width={300}
           />
