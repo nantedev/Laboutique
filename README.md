@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+![Neptune mickael nantedev e-commerce](./mickael-nantedev-andria-e-commerce.png)
 
-## Getting Started
+# Neptune
 
-First, run the development server:
+Neptune is a modern, high-performance e-commerce application built with **Next.js 15** and **React 19**. It offers a smooth user experience, with complete management of products, orders, and users through an advanced admin dashboard.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features 🚀
+- **Secure payments**: Integration of **PayPal**, **Stripe**, and cash on delivery.
+- **Complete authentication** with **Next Auth**.
+- **Advanced search** with dynamic filtering and sorting.
+- **User management**: profiles, authentication, and sessions.
+- **Admin dashboard**:
+  - Management of products, orders, and users.
+  - Statistics and monthly sales charts (**Recharts**).
+- **Review system**: product reviews and ratings.
+- **Optimized experience**:
+  - **Image uploads** with **Uploadthing**.
+  - **Dynamic and validated forms** with **React Hook Form** and **Zod**.
+  - **Modern design** with **ShadCN UI** and **Tailwind CSS**.
+- **Continuous deployment** via **Vercel** and **Git**.
+- **Security and performance**:
+  - Cart management with sessions, **JWT**, and cookies.
+  - Fully typed code with **TypeScript**.
+  - Robust data validation with **Zod**.
+- **Robust database**: **PostgreSQL** with **Prisma** for ORM.
+- **Code quality** ensured with **ESLint** and **Jest** for testing.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Technologies Used 🛠️
+- **Next.js 15** & **React 19**
+- **TypeScript**
+- **PostgreSQL** & **Prisma**
+- **Next Auth** Authentication
+- **Zod** Data validation
+- **React Hook Form** Form management
+- **Stripe & PayPal API** Online payments
+- **ShadCN UI** & **Tailwind CSS** UI/UX
+- Charts and statistics
+- Image uploads
+- Deployment
+- **ESLint** & **Jest** Code quality & testing
