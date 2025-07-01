@@ -1,4 +1,4 @@
-![Neptune mickael nantedev e-commerce](./images/mickael-nantedev-andria-e-commerce.png)
+![Neptune mickael nantedev e-commerce](./public/images/mickael-nantedev-andria-e-commerce.png)
 
 # Neptune
 
