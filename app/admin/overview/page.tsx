@@ -99,7 +99,7 @@ const AdminOverviewPage = async () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>ACHETEUR</TableHead>
+                  <TableHead>CLIENT</TableHead>
                   <TableHead>DATE</TableHead>
                   <TableHead>TOTAL</TableHead>
                   <TableHead>ACTIONS</TableHead>

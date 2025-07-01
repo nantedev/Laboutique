@@ -91,15 +91,14 @@ const OrderDetailsTable = ({
             <Button
                 type='button'
                 disabled={isPending}
-                onClick={() =>
-                startTransition(async () => {
-                    const res = await updateOrderToPaidByCOD(order.id);
-                    
-                    res.success ? toast.success(res.message) : toast.error(res.message);
-                })
-                }
+                onClick={() => {
+                    startTransition(async () => {
+                        const res = await updateOrderToPaidByCOD(order.id);
+                        res.success ? toast.success(res.message) : toast.error(res.message);
+                    });
+                }}
             >
-                {isPending ? 'Processing...' : 'Mark As Paid'}
+                {isPending ? 'Traitement...' : 'Marquer comme payée'}
             </Button>
             );
         };
@@ -112,15 +111,14 @@ const OrderDetailsTable = ({
             <Button
                 type='button'
                 disabled={isPending}
-                onClick={() =>
-                startTransition(async () => {
-                    const res = await deliverOrder(order.id);
-        
-                    res.success ? toast.success(res.message) : toast.error(res.message);
-                })
-                }
+                onClick={() => {
+                    startTransition(async () => {
+                        const res = await deliverOrder(order.id);
+                        res.success ? toast.success(res.message) : toast.error(res.message);
+                    });
+                }}
             >
-                {isPending ? 'Processing...' : 'Mark As Delivered'}
+                {isPending ? 'Traitement...' : 'Marquer comme livrée'}
             </Button>
             );
         };
@@ -138,10 +136,10 @@ const OrderDetailsTable = ({
                         <p>{paymentMethod}</p>
                         {isPaid ? (
                         <Badge variant='secondary'>
-                            Payé le {formatDateTime(paidAt!).dateTime}
+                            Payée le {formatDateTime(paidAt!).dateTime}
                         </Badge>
                         ) : (
-                        <Badge variant='destructive'>Non payé</Badge>
+                        <Badge variant='destructive'>Non payée</Badge>
                         )}
                     </CardContent>
                 </Card>
@@ -156,10 +154,10 @@ const OrderDetailsTable = ({
                         </p>
                         {isDelivered ? (
                         <Badge variant='secondary'>
-                            Livré le {formatDateTime(deliveredAt!).dateTime}
+                            Livrée le {formatDateTime(deliveredAt!).dateTime}
                         </Badge>
                         ) : (
-                        <Badge variant='destructive'>Non livré</Badge>
+                        <Badge variant='destructive'>Non livrée</Badge>
                         )}
                     </CardContent>
                 </Card>

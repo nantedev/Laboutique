@@ -104,7 +104,7 @@ const PaymentMethodForm = ({
           <div className='flex gap-2'>
             <Button type='submit' disabled={isPending}>
               {isPending ? (
-                <Loader className='animate-spin w-4 h-4' />
+                <Loader className='w-4 h-4 animate-spin' />
               ) : (
                 <ArrowRight className='w-4 h-4' />
               )}

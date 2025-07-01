@@ -1,6 +1,3 @@
-import { requireAdmin } from '@/lib/auth-guard';
-import { auth } from '@/auth';
-
 import Pagination from '@/components/shared/pagination';
 import { Button } from '@/components/ui/button';
 import {
@@ -12,7 +9,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { formatId } from '@/lib/utils';
-import { Metadata } from 'next';
 import Link from 'next/link';
 import DeleteDialog from '@/components/shared/delete-dialog';
 import { getAllUsers, deleteUser } from '@/lib/actions/user.actions';

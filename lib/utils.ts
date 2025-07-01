@@ -15,21 +15,48 @@ export function formatNumberWithDecimal(num: number): string {
   return decimal ? `${int}.${decimal.padEnd(2, '0')}` : `${int}.00`;
 }
 
-export function formatError(error: any): string {
+interface ZodErrorType {
+  name: 'ZodError';
+  errors: {
+    [key: string]: {
+      message: string | unknown;
+    };
+  };
+  message: string;
+}
+
+interface PrismaError {
+  name: 'PrismaClientKnownRequestError';
+  code: string;
+  meta?: {
+    target?: string[];
+  };
+  message: string;
+}
+
+interface GenericError {
+  name?: string;
+  message: string;
+}
+
+export type ErrorType = ZodErrorType | PrismaError | GenericError;
+
+export function formatError(error: ErrorType): string {
   if (error.name === 'ZodError') {
     // Handle Zod error
-    const fieldErrors = Object.keys(error.errors).map((field) => {
-      const message = error.errors[field].message;
+    const fieldErrors = Object.keys((error as ZodErrorType).errors).map((field) => {
+      const message = (error as ZodErrorType).errors[field].message;
       return typeof message === 'string' ? message : JSON.stringify(message);
     });
 
     return fieldErrors.join('. ');
   } else if (
     error.name === 'PrismaClientKnownRequestError' &&
-    error.code === 'P2002'
+    (error as PrismaError).code === 'P2002'
   ) {
     // Handle Prisma error
-    const field = error.meta?.target ? error.meta.target[0] : 'Field';
+    const target = (error as PrismaError).meta?.target;
+    const field = target ? target[0] : 'Field';
     return `${field.charAt(0).toUpperCase() + field.slice(1)} existe déjà`;
   } else {
     // Handle other errors

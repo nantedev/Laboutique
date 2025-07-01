@@ -4,13 +4,12 @@ import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { z } from 'zod';
 import { auth } from '@/auth';
-import { formatError, round2 } from '../utils';
+import { formatError, round2, ErrorType } from '../utils';
 import { cartItemSchema, insertCartSchema } from '../validator';
 import { prisma } from '@/db/prisma';
 import { CartItem } from '@/types';
 import { Prisma } from '@prisma/client';
 import { convertToPlainObject } from '../utils';
-import { X } from 'lucide-react';
 
 
 // Calculate cart price based on items
@@ -110,7 +109,7 @@ export const addItemToCart = async (data: z.infer<typeof cartItemSchema>) => {
     }
    
   } catch (error) {
-    return { success: false, message: formatError(error) };
+    return { success: false, message: formatError(error as ErrorType) };
   }
 };
 
@@ -203,6 +202,6 @@ export async function removeItemFromCart (productId: string) {
     };
    
   } catch (error) {
-    return { success: false, message: formatError(error) };
+    return { success: false, message: formatError(error as ErrorType) };
   }
 };

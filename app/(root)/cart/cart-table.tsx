@@ -115,7 +115,7 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
             <Card>
                 <CardContent className='p-4   gap-4'>
                     <div className='pb-3 text-xl'>
-                    Total ({cart?.items.reduce((a, c) => a + c.qty, 0) ?? 0}):
+                    Total ({cart?.items.reduce((a, c) => a + c.qty, 0) ?? 0} article{ cart?.items.length && cart?.items.length > 1? 's' :"" }) :{" "}
                     {cart ? formatCurrency(cart.itemsPrice) : '0€'}
                     </div>
                     <Button

@@ -2,8 +2,11 @@
 import { APP_NAME } from '@/lib/constants';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 const NotFound = () => {
+  const router = useRouter();
+  
   return (
     <div className='flex flex-col items-center justify-center min-h-screen '>
       <Image
@@ -19,7 +22,7 @@ const NotFound = () => {
         <Button
           variant='outline'
           className='mt-4 ml-2'
-          onClick={() => (window.location.href = '/')}
+          onClick={() => router.push('/')}
         >
           Revenir à l&apos;accueil
         </Button>
